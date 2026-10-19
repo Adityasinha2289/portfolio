@@ -321,6 +321,17 @@ button { font: inherit; color: inherit; }
 .legend i { width: 12px; height: 12px; border-radius: 3px; border: 1.5px solid var(--sage-2); }
 .legend i.g { background: var(--gold); border-color: var(--forest); }
 .field-note { font-size: 14px; color: var(--muted); }
+.mile-side { display: grid; gap: 18px; min-width: 0; }
+.award {
+  display: grid; grid-template-columns: auto 1fr; align-items: center; gap: 18px;
+  border: var(--line); border-radius: var(--r); background: var(--forest); color: var(--canvas);
+  box-shadow: 6px 6px 0 var(--gold); padding: 14px 20px;
+}
+.award-rank { font-family: var(--f-display); font-stretch: 125%; font-weight: 900; font-size: 40px; line-height: 1; color: var(--gold); font-variant-numeric: tabular-nums; }
+.award-rank small { font-size: 18px; color: var(--sage-2); font-weight: 800; }
+.award-text { display: grid; gap: 2px; }
+.award-text .lane-tag { color: var(--gold); }
+.award-text b { font-size: 17px; line-height: 1.25; }
 
 /* ---------- 5. work ---------- */
 .work { grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr); column-gap: clamp(24px, 4vw, 64px); align-items: start; }
@@ -658,10 +669,16 @@ button { font: inherit; color: inherit; }
             <div><dt>Organisers</dt><dd class="txt">Bennett University × HED</dd></div>
           </dl>
         </div>
-        <div class="field" data-depth style="--d: 90">
+        <div class="mile-side" data-depth style="--d: 90">
+        <div class="field">
           <div class="field-head"><b>The field</b><span class="legend"><span><i class="g"></i>Top 15</span><span><i></i>Other teams</span></span></div>
           <div class="grid200" id="grid200" role="img" aria-label="200 squares, one per team, with 15 highlighted for the teams in the top 15."></div>
           <p class="field-note">Each square is one team. 200 took part and 15 went through to pitch to investors.</p>
+        </div>
+        <div class="award">
+          <span class="award-rank">14<small> / 600</small></span>
+          <span class="award-text"><span class="lane-tag">Smart India Hackathon</span><b>Ranked 14th out of 600 teams</b></span>
+        </div>
         </div>
       </div>
     </section>
@@ -858,7 +875,7 @@ button { font: inherit; color: inherit; }
             <div class="skill"><b>Product strategy</b><span>Scoping RenoCred's core loop and deciding what ships.</span>
               <span class="proof"><button type="button" data-to="founder">Founder's job</button></span></div>
             <div class="skill"><b>Startup execution</b><span>Launched RenoCred, scaled it, and brought on an intern team.</span>
-              <span class="proof"><button type="button" data-to="milestones">Bootcamp</button></span></div>
+              <span class="proof"><button type="button" data-to="milestones">Bootcamp</button><button type="button" data-to="milestones">SIH · 14th of 600</button></span></div>
             <div class="skill"><b>Business development &amp; partnerships</b><span>Set up RenoCred's partner programme and hiring pipeline.</span>
               <span class="proof"><button type="button" data-to="renocred">RenoCred</button></span></div>
             <div class="skill"><b>Leadership &amp; operations</b><span>Led student core teams through flagship events.</span>

@@ -11,7 +11,7 @@ The site is a horizontal, panel-based experience: each section fills one screen 
 | 01 | Intro | Who I am and what I'm building |
 | 02 | RenoCred | The product, how it works, 536+ cards in the dataset |
 | 03 | The founder's job | Product, engineering, financial intelligence, business and growth |
-| 04 | Milestones | Entrepreneurship Bootcamp by Bennett University × HED: top 15 of 200 teams |
+| 04 | Milestones | Entrepreneurship Bootcamp by Bennett University × HED: top 15 of 200 teams. Smart India Hackathon: ranked 14th of 600 teams |
 | 05 | Work | Selected projects: Hate Speech Detector, NEXGram, ExtractFlow, UniAssist, Bennett Connect |
 | 06 | Experience | Roles and education |
 | 07 | Skills | Build, Intelligence and Business capabilities, each linked to evidence |
