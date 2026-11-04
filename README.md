@@ -1,54 +1,90 @@
 # Aditya Sinha · Portfolio
 
-Personal website of **Aditya Sinha**, founder of [RenoCred](https://renocred.com), an AI-powered credit card and financial intelligence platform that tells you which card to swipe for every spend.
+Personal portfolio of **Aditya Sinha** — software engineer, AI builder and founder of [RenoCred](https://renocred.com).
+Neo-brutalist × Swiss editorial design: ivory and ink, acid-lime accents, engineering-grid details.
 
-The site is a horizontal, panel-based experience: each section fills one screen and you move between them by scrolling, swiping or using the arrow keys.
+## Stack
 
-## Sections
+React 19 · TypeScript (strict) · Vite · Tailwind CSS v4 · Motion (`motion/react`, via `LazyMotion`) · React Router 7 · Lucide.
+Fonts are self-hosted through Fontsource (Space Grotesk, DM Sans, IBM Plex Mono). No backend.
 
-| # | Panel | What it covers |
-|---|-------|----------------|
-| 01 | Intro | Who I am and what I'm building |
-| 02 | RenoCred | The product, how it works, 536+ cards in the dataset |
-| 03 | The founder's job | Product, engineering, financial intelligence, business and growth |
-| 04 | Milestones | Entrepreneurship Bootcamp by Bennett University × HED: top 15 of 200 teams. Smart India Hackathon: ranked 14th of 600 teams |
-| 05 | Work | Selected projects: Hate Speech Detector, NEXGram, ExtractFlow, UniAssist, Bennett Connect |
-| 06 | Experience | Roles and education |
-| 07 | Skills | Build, Intelligence and Business capabilities, each linked to evidence |
-| 08 | Contact | Email and links |
-
-## Tech
-
-Plain HTML, CSS and JavaScript in a single `index.html`. No framework, no build step, no dependencies. Fonts come from Google Fonts (Archivo, Schibsted Grotesk, IBM Plex Mono).
-
-- Native CSS scroll-snap for the horizontal track, so touch and trackpad swipes feel natural
-- Mouse-wheel scrolling mapped to one panel per gesture; tall panels scroll vertically first
-- Keyboard navigation (← → / PageUp / PageDown / Home / End), deep links (`#renocred`, `#milestones`, …) and a mobile menu
-- Respects `prefers-reduced-motion`
-
-## Run locally
-
-Open `index.html` in a browser, or serve the folder:
+## Commands
 
 ```bash
-npx serve .
+npm install
+npm run dev        # http://localhost:5173
+npm run build      # typecheck + production build → dist/
+npm run preview    # serve dist/ at http://localhost:4173
+npm run typecheck
+npm run lint
 ```
 
-## Deploy
+## Environment
 
-Hosted on [Vercel](https://vercel.com) as a static site. Every push to `main` redeploys.
+| Variable        | Required | Purpose |
+|-----------------|----------|---------|
+| `VITE_SITE_URL` | No, but recommended | Public origin, e.g. `https://adityasinha.dev`. Enables canonical URLs, absolute `og:url`/`og:image`, and `sitemap.xml`. Without it the build skips those and prints a warning. |
 
-## Updating the bootcamp milestone
+See `.env.example`.
 
-The milestone lives in the `<!-- 4. MILESTONES -->` block of `index.html`:
+## Deploy (Vercel)
 
-- Add facts as extra `<div><dt>Label</dt><dd>Value</dd></div>` rows inside `.mile-facts`.
-- When the investor pitch happens, change `data-status="upcoming"` to `data-status="done"` on that step and update its text.
+1. Import the repo in Vercel — the Vite preset is detected (build `npm run build`, output `dist`).
+2. Set `VITE_SITE_URL` in Project → Settings → Environment Variables, then redeploy.
+3. `vercel.json` handles SPA rewrites, clean URLs, long-lived caching for hashed assets and basic security headers.
 
-## Contact
+## How it's organised
 
-- Email: adityasinha2598@gmail.com
-- LinkedIn: [aditya-sinha2289](https://www.linkedin.com/in/aditya-sinha2289/)
-- GitHub: [Adityasinha2289](https://github.com/Adityasinha2289)
+```text
+src/
+├── app/            router + root layout (nav, footer, page transition, scroll manager)
+├── components/
+│   ├── brutalist/  BrutalButton, SectionHeading, Marquee, ProvenanceBadge
+│   ├── motion/     Reveal, MagneticButton
+│   ├── terminal/   EngineeringTerminal + typed command registry
+│   ├── case-study/ architecture & flow diagrams
+│   ├── common/     DeviceFrame, TerminalWindow, ConfusionMatrixView
+│   └── layout/     Navbar, Footer, ScrollManager
+├── sections/       home-page sections (Hero … Contact)
+├── pages/          Home, CaseStudyPage (one data-driven template, code-split), NotFound, errors
+├── data/           ALL content: site, projects, skills, experience, achievements, navigation
+├── hooks/
+└── styles/         design tokens + base styles (globals.css)
+build/seo-plugin.ts  build-time <head> tags, per-route HTML, robots.txt, sitemap.xml
+legacy/              the previous single-file site, kept for reference (not deployed)
+```
 
-© 2026 Aditya Sinha
+**Content lives only in `src/data/`.** To edit copy, add a project or change a link, edit the data files — components
+never hardcode content. Case-study routes (`/work/:slug`) are generated from `src/data/projects.ts`; per-route SEO
+metadata lives in `src/data/site.ts`.
+
+### Honesty rules baked into the data
+
+Every metric carries a `provenance`, rendered as a small badge:
+
+- **Measured** — reproduced by running the project's own code (e.g. the hate-speech metrics were reproduced on
+  3 Nov 2026 by re-running `train_model.py`'s exact pipeline).
+- **Per repository** — stated in that project's repo docs.
+- **Reported** — reported by Aditya, not independently verified.
+- **Verifiable** — publicly observable (e.g. a live site).
+- **Documented** — backed by an official document shown on the site (the Grand Demo Day finalist poster, the BU SIH-26
+  rank certificate). Certificates live in `src/assets/` and open in a lightbox.
+- **Pending** — not available yet.
+
+Skills are tagged *Shipped / Built / Exploring* instead of proficiency bars.
+
+## Adding things later
+
+- **Resume:** add a redacted PDF at `public/resume.pdf` and set `resumeUrl = "/resume.pdf"` in `src/data/site.ts`.
+  Until then, resume buttons open a pre-filled email request.
+- **NEXGram screenshots:** add images to `src/assets/projects/` and replace the `placeholder` visual in
+  `src/data/projects.ts` with `kind: "image"` entries.
+- **Social image:** `public/og.png` (1200×630).
+
+## Accessibility & motion
+
+Semantic landmarks, skip link, visible focus rings, focus-trapped mobile menu, labelled terminal input with a live
+log region. Every animation honours `prefers-reduced-motion` (Motion's `reducedMotion="user"` plus CSS fallbacks);
+content never depends on an animation to become readable. Magnetic buttons are disabled on touch devices.
+
+© Aditya Sinha
